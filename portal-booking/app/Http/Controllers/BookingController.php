@@ -72,7 +72,9 @@ public function edit($id)
 {
     $booking = Booking::findOrFail($id);
 
-    $response = Http::get('http://layanan-ruangan-nginx/api/rooms');
+    $token = config('services.ruangan.token');
+    //$response = Http::get('http://layanan-ruangan-nginx/api/rooms');
+    $response = Http::withToken($token)->timeout(60)->get('http://layanan-ruangan-nginx/api/rooms');
     $rooms = [];
 
     if ($response->successful()) {
