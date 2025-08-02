@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  portal-booking-app:
+    build: ./portal-booking
+    container_name: portal-booking-app
+    networks:
+      - app-network
+    depends_on:
+      - portal-booking-db
+
+  portal-booking-nginx:
+    image: nginx:alpine
+    container_name: portal-booking-nginx
+    networks:
+      - app-network
+    depends_on:
+      - portal-booking-app
+
+  portal-booking-db:
+    image: mysql:8.0
+    container_name: portal-booking-db
+    environment:
+      MYSQL_DATABASE: ${PORTAL_BOOKING_DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${PORTAL_BOOKING_DB_PASSWORD}
+    volumes:
+      - portal-booking-db-data:/var/lib/mysql
+    ports:
+      - "33061:3306"
+    networks:
+      - app-network
+
+# layanan ruangan
+  layanan-ruangan-app:
+    build: ./layanan-ruangan
+    container_name: layanan-ruangan-app
+    networks:
+      - app-network
+    depends_on:
+      - layanan-ruangan-db
+
+  layanan-ruang-nginx:
+    image: nginx:alpine
+    container_name: layanan-ruangan-nginx
+    networks:
+      - app-network
+    depends_on:
+      - layanan-ruangan-app
+
+  layanan-ruangan-db:
+      image: mysql:8.0
+      container_name: layanan-ruangan-db
+      environment:
+        MYSQL_DATABASE: ${LAYANAN_RUANGAN_DB_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${LAYANAN_RUANGAN_DB_PASSWORD}
+      volumes:
+        - layanan-ruangan-db-data:/var/lib/mysql
+      ports:
+        - "33062:3306"
+      networks:
+        - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  portal-booking-db-data:
+  layanan-ruangan-db-data:
+
