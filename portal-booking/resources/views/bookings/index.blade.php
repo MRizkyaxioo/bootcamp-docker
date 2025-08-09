@@ -25,7 +25,6 @@
         <table class="min-w-full bg-white border border-gray-200">
             <thead>
                 <tr class="bg-gray-200 text-left">
-                    <th class="px-4 py-2">ID</th>
                     <th class="px-4 py-2">User ID</th>
                     <th class="px-4 py-2">Room</th>
                     <th class="px-4 py-2">Judul</th>
@@ -37,7 +36,6 @@
             <tbody>
                 @foreach ($bookings as $booking)
                     <tr class="border-t">
-                        <td class="px-4 py-2">{{ $booking->id }}</td>
                         <td class="px-4 py-2">{{ $booking->user_id }}</td>
                         <td class="px-4 py-2">{{ $roomMap[$booking->room_id] ?? 'Tidak ditemukan' }}</td>
                         <td class="px-4 py-2">{{ $booking->title }}</td>

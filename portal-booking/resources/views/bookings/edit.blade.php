@@ -8,6 +8,23 @@
 <body class="bg-gray-100 p-6">
     <div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
         <h1 class="text-xl font-bold mb-4">Edit Booking</h1>
+@if ($errors->any())
+    <div class="mb-4 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded" role="alert">
+        <div class="flex items-center mb-2">
+            <svg class="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M9.17 9.17l5.66 5.66"/>
+            </svg>
+            <span class="font-bold">Something went wrong:</span>
+        </div>
+        <ul class="list-disc list-inside text-sm">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 
         <form action="{{ route('bookings.update', $booking->id) }}" method="POST">
             @csrf
